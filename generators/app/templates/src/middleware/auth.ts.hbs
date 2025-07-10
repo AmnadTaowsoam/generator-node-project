@@ -1,0 +1,51 @@
+
+// generators/app/templates/src/middleware/auth.ts.hbs
+
+import { Request, Response, NextFunction } from 'express';
+import jwt, { VerifyErrors, JwtPayload } from 'jsonwebtoken';
+import { JWT_SECRET_KEY, ALGORITHM } from '../configs/config.stub';
+
+/**
+ * BOILERPLATE STUB
+ * Middleware for JWT authentication.
+ * TODO: Adjust error handling and token extraction logic per project requirements.
+ */
+export interface AuthRequest extends Request {
+  user?: JwtPayload | string;
+}
+
+export const authenticateToken = (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) {
+    return res.status(401).json({ message: 'Authorization header missing' });
+  }
+
+  const [scheme, token] = authHeader.split(' ');
+  if (scheme !== 'Bearer' || !token) {
+    return res
+      .status(401)
+      .json({ message: 'Malformed authorization header. Expected Bearer <token>' });
+  }
+
+  jwt.verify(
+    token,
+    JWT_SECRET_KEY,
+    { algorithms: [ALGORITHM as jwt.Algorithm] },
+    (err: VerifyErrors | null, payload: JwtPayload | string | undefined) => {
+      if (err) {
+        console.error('JWT error:', err);
+        if (err.name === 'TokenExpiredError') {
+          return res.status(401).json({ message: 'Token has expired' });
+        }
+        return res.status(403).json({ message: 'Invalid token: ' + err.message });
+      }
+      req.user = payload!;
+      next();
+    }
+  );
+};
+

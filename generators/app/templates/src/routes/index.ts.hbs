@@ -1,0 +1,19 @@
+// generators/app/templates/src/routes/index.ts.hbs
+
+import { Router } from 'express';
+import dataRouter from './data.route.stub';
+
+/**
+ * BOILERPLATE STUB
+ * Central router to mount all feature routers.
+ */
+const router = Router();
+
+// Mount economic data routes
+router.use('/data', dataRouter);
+
+// TODO: Mount other routers here, e.g.:
+// import userRouter from './user.route.stub';
+// router.use('/users', userRouter);
+
+export default router;

@@ -1,0 +1,25 @@
+{
+  "name": "generator-node-project",
+  "version": "1.0.0",
+  "description": "Yeoman generator for node-project scaffold",
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "main": "generators/app/index.js",
+  "files": [
+    "generators"
+  ],
+  "bin": {
+    "yo-auth-service": "generators/app/index.js"
+  },
+  "scripts": {
+  "test": "mocha \"test/**/*.spec.js\" --timeout 10000"
+  },
+  "dependencies": {
+    "mem-fs": "^4.1.2",
+    "mem-fs-editor": "^11.1.4",
+    "mocha": "^11.7.1",
+    "yeoman-assert": "^3.1.1",
+    "yeoman-generator": "^7.5.1"
+  }
+}

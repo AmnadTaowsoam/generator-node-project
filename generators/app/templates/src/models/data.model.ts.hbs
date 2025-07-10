@@ -1,0 +1,23 @@
+// generators/app/templates/src/models/data.model.ts.hbs
+
+/**
+ * BOILERPLATE STUB
+ * EconomicData entity stub - Add properties and annotations as needed
+ */
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+
+@Entity({ schema: 'data', name: 'data' })
+export class Data {
+  @PrimaryGeneratedColumn({ name: 'id' })
+  id!: number;
+
+  // TODO: Add other columns below with appropriate TypeORM decorators
+  @Column({ name: 'column_name', type: 'varchar', length: 255 })
+  exampleField!: string;
+
+  @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
+  createdAt!: Date;
+
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamptz' })
+  updatedAt!: Date;
+}

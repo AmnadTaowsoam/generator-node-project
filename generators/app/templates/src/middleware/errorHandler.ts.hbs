@@ -1,0 +1,36 @@
+
+// generators/app/templates/src/middleware/errorHandler.ts.hbs
+
+import { Request, Response, NextFunction } from 'express';
+
+/**
+ * BOILERPLATE STUB
+ * Centralized Express error handling middleware.
+ * TODO: Customize error response format and logging as needed.
+ */
+export function errorHandler(
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  // If headers are already sent, delegate to default Express handler
+  if (res.headersSent) {
+    return next(err);
+  }
+
+  // Log error for debugging
+  console.error('🚨 Unhandled error:', err);
+
+  // Determine status code (use err.status if defined, otherwise default to 500)
+  const status = (err as any).status || 500;
+
+  // Send JSON response with error message
+  res.status(status).json({
+    error: {
+      message: err.message,
+      // TODO: include additional metadata (timestamp, error code, stack) as needed
+    }
+  });
+}
+
