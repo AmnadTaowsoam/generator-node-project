@@ -115,6 +115,13 @@ module.exports = class extends Generator {
         globOptions: {
           dot: true,
           ignore: ['**/node_modules/**', '**/*.lock']
+        },
+        // ตรงนี้ใช้ processDestinationPath เพื่อเปลี่ยนชื่อไฟล์ก่อนเขียนลง disk
+        processDestinationPath: filePath => {
+          // ถ้าไฟล์ลงท้าย .hbs ให้ตัดทิ้ง
+          return filePath.endsWith('.hbs')
+            ? filePath.replace(/\.hbs$/, '')
+            : filePath;
         }
       }
     );
